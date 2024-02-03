@@ -93,4 +93,20 @@ public class TextEditorTest {
     Assertions.assertEquals(result, "zzzab");
   }
 
+  @Test
+  void undo_shouldDeleteLastTypedInput() throws IllegalParameterException {
+    String expectedText = "ww";
+    this.textEditor.type("a");
+    this.textEditor.type("123");
+    this.textEditor.moveLeft();
+
+    this.textEditor.undo();
+    this.textEditor.undo();
+    this.textEditor.type("www");
+    this.textEditor.delete();
+    String result = this.textEditor.getCurrentText();
+
+    Assertions.assertEquals(expectedText, result);
+  }
+
 }

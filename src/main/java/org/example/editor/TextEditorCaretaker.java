@@ -26,9 +26,7 @@ public class TextEditorCaretaker {
     if (undoHistory.isEmpty()) {
       throw new InvalidOperationException("No undo history is found!");
     }
-    TextEditorMemento textEditorMemento = undoHistory.pop();
-    redoHistory.add(textEditorMemento);
-    return textEditorMemento;
+    return undoHistory.pop();
   }
 
   public TextEditorMemento redo() throws InvalidOperationException {
