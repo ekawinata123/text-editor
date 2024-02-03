@@ -1,5 +1,6 @@
 package org.example.editor;
 
+import org.example.exception.IllegalParameterException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,7 @@ public class TextEditorTest {
   }
 
   @Test
-  void type_shouldAppendStringAsChars_whenInputIsNonEmpty() {
+  void type_shouldAppendStringAsChars_whenInputIsNonEmpty() throws IllegalParameterException {
     String expectedText = "abc\ndef";
 
     this.textEditor.type("abc");
@@ -25,7 +26,13 @@ public class TextEditorTest {
   }
 
   @Test
-  void delete_shouldRemoveCurrentCharAtCursor_whenCursorIsNotZero() {
+  void type_shouldThrowInvalidParameterException_whenInputIsNull() {
+    Assertions.assertThrows(IllegalParameterException.class, () -> textEditor.type(null));
+  }
+
+
+  @Test
+  void delete_shouldRemoveCurrentCharAtCursor_whenCursorIsNotZero() throws IllegalParameterException {
     String initialText = "abcd";
     String expectedText = "ab";
     this.textEditor.type(initialText);
@@ -38,7 +45,7 @@ public class TextEditorTest {
   }
 
   @Test
-  void moveLeft_shouldMoveCursorLeftOneUnit_whenCurrentIndexIsNotZero() {
+  void moveLeft_shouldMoveCursorLeftOneUnit_whenCurrentIndexIsNotZero() throws IllegalParameterException {
     String initialText = "abcd";
     this.textEditor.type(initialText);
 
@@ -51,7 +58,7 @@ public class TextEditorTest {
   }
 
   @Test
-  void moveLeft_shouldKeepCursorPosition_whenCurrentIndexIsZero() {
+  void moveLeft_shouldKeepCursorPosition_whenCurrentIndexIsZero() throws IllegalParameterException {
     this.textEditor.moveLeft();
     this.textEditor.type("a");
     String result = this.textEditor.getCurrentText();
@@ -60,7 +67,7 @@ public class TextEditorTest {
   }
 
   @Test
-  void moveRight_shouldMoveCursorRightOneUnit_whenCurrentIndexIsNotEqualsTextLength() {
+  void moveRight_shouldMoveCursorRightOneUnit_whenCurrentIndexIsNotEqualsTextLength() throws IllegalParameterException {
     String initialText = "abcd";
     this.textEditor.type(initialText);
     this.textEditor.moveLeft();
@@ -74,7 +81,7 @@ public class TextEditorTest {
   }
 
   @Test
-  void moveRight_shouldNotMoveCursor_whenCurrentIndexIsEqualsToTextLengthSize() {
+  void moveRight_shouldNotMoveCursor_whenCurrentIndexIsEqualsToTextLengthSize() throws IllegalParameterException {
     this.textEditor.type("zzz");
     this.textEditor.moveRight();
     this.textEditor.moveRight();

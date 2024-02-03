@@ -1,8 +1,11 @@
 package org.example.editor;
 
+import org.example.exception.IllegalParameterException;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class TextEditor {
@@ -15,9 +18,11 @@ public class TextEditor {
     this.characters = new LinkedList<>();
   }
 
-  public void type(String input) {
+  public void type(String input) throws IllegalParameterException {
+    if (Objects.isNull(input)) {
+      throw new IllegalParameterException("text");
+    }
     ListIterator<Character> iterator = characters.listIterator(this.cursorIndex);
-
     for (char c : input.toCharArray()) {
       iterator.add(c);
       cursorIndex++;
